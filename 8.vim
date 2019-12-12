@@ -22,24 +22,45 @@ while i < len(input)
   call add(layers, layer)
 endwhile
 
-let counts = []
+call reverse(layers)
+let image = layers[0]
+call remove(layers, 0)
 for layer in layers
-  let zCount = 0
-  for row in layer
-    for n in row
-      let zCount += n == 0
-    endfor
-  endfor
-  call add(counts, zCount)
+  let j = 0
+  while j < height
+    let k = 0
+    while k < width
+      if layer[j][k] != 2
+        let image[j][k] = layer[j][k]
+      endif
+      let k += 1
+    endwhile
+    let j += 1
+  endwhile
 endfor
 
-let oneCount = 0
-let twoCount = 0
-for row in layers[index(counts, min(counts))]
-  for n in row
-    let oneCount += n == 1
-    let twoCount += n == 2
-  endfor
+for row in image
+  echom substitute(substitute(join(row, ''), '0', ' ', 'g'), '1', '□', 'g')
 endfor
 
-echo oneCount * twoCount
+" let counts = []
+" for layer in layers
+"   let zCount = 0
+"   for row in layer
+"     for n in row
+"       let zCount += n == 0
+"     endfor
+"   endfor
+"   call add(counts, zCount)
+" endfor
+"
+" let oneCount = 0
+" let twoCount = 0
+" for row in layers[index(counts, min(counts))]
+"   for n in row
+"     let oneCount += n == 1
+"     let twoCount += n == 2
+"   endfor
+" endfor
+"
+" echo oneCount * twoCount
